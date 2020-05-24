@@ -1,0 +1,21 @@
+<div id="board">
+  <div id="splash" *ngIf="!gameStatus">
+    <div *ngIf="score > 0" id="score">Your score: {{ score }}</div>
+    <button (click)="newGame()">New Game</button>
+  </div>
+
+  <div *ngFor="let e of enemies">
+    <div *ngIf="e" [ngStyle]="entityStyle(e)">e</div>
+  </div>
+  <div *ngFor="let m of missiles">
+    <div *ngIf="m" [ngStyle]="entityStyle(m)">m</div>
+  </div>
+
+  <div id="wall" [ngStyle]="wallStyle()"></div>
+</div>
+
+<div id="controls">
+  <button *ngFor="let b of buttons; let i = index" (click)="buttonClick(i)">
+    Fire
+  </button>
+</div>

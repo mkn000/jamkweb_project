@@ -1,0 +1,19 @@
+#maincontainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 0 10px;
+}
+
+app-scoreboard {
+  width: 500px;
+  margin-right: 10px;
+}
+
+.navbar-nav > li > a {
+  padding-top: 2px !important;
+  padding-bottom: 2px !important;
+}
+.navbar {
+  min-height: 20px !important;
+}

@@ -1,0 +1,10 @@
+<div id="leaderboard">
+  <h2>Leaderboard</h2>
+  <div class="entry" *ngFor="let L of leaders">
+    <span class="name">{{ L.name }}</span>
+    <span class="score">{{ L.score }}</span>
+  </div>
+
+  <h2>Personal best</h2>
+  <div id="pb">{{ scores.score }}</div>
+</div>
