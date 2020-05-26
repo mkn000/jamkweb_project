@@ -5,9 +5,9 @@
   margin: 0 10px;
 }
 
-app-scoreboard {
-  width: 500px;
-  margin-right: 10px;
+app-info {
+  margin-right: 0 auto;
+  flex-grow: 1;
 }
 
 .navbar-nav > li > a {
@@ -15,5 +15,23 @@ app-scoreboard {
   padding-bottom: 2px !important;
 }
 .navbar {
-  min-height: 20px !important;
+  min-height: 30px !important;
+}
+
+#infonav {
+  display: none;
+}
+
+@media only screen and (max-width: 910px) {
+  #maincontainer {
+    flex-direction: column;
+  }
+
+  app-info {
+    display: none;
+  }
+
+  #infonav {
+    display: block;
+  }
 }

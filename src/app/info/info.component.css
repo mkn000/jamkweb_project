@@ -1,0 +1,9 @@
+h2,
+h3 {
+  margin: 50px auto;
+}
+
+#container {
+  max-width: 600px;
+  margin: 0 auto;
+}

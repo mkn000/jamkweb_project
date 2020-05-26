@@ -1,0 +1,60 @@
+<div id="container" class="mx-2">
+  <h2>Login</h2>
+  <form #f="ngForm" novalidate>
+    <div class="form-group">
+      <label>Username:</label>
+      <input
+        type="text"
+        class="form-control"
+        name="tunnus"
+        maxlength="6"
+        ngModel
+        required
+      />
+      <div
+        *ngIf="f.form.hasError('required', 'tunnus') && f.submitted"
+        class="text-danger"
+      >
+        Username required
+        <br />
+      </div>
+      <div
+        *ngIf="f.form.hasError('maxlength', 'tunnus') && f.submitted"
+        class="text-danger"
+      >
+        Username maximum length is 6 characters.
+        <br />
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Password:</label>
+      <input
+        type="password"
+        class="form-control"
+        name="salasana"
+        minlength="8"
+        ngModel
+        required
+      />
+      <div
+        *ngIf="f.form.hasError('required', 'salasana') && f.submitted"
+        class="text-danger"
+      >
+        Password required.
+      </div>
+      <div
+        *ngIf="f.form.hasError('minlength', 'salasana') && f.submitted"
+        class="text-danger"
+      >
+        Password minimum length is 8 characters.
+      </div>
+    </div>
+    <button class="btn btn-primary" (click)="signIn(f.value, f.valid)">
+      Login
+    </button>
+    <button class="btn btn-secondary" (click)="signUp(f.value, f.valid)">
+      Register
+    </button>
+  </form>
+  <div *ngIf="errorMsg" class="text-danger">{{ errorMsg }}</div>
+</div>

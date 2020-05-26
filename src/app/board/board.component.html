@@ -1,7 +1,7 @@
 <div id="board">
   <div id="splash" *ngIf="!gameStatus">
     <div *ngIf="score > 0" id="score">Your score: {{ score }}</div>
-    <button (click)="newGame()">New Game</button>
+    <button (click)="newGame()" class="btn btn-primary">New Game</button>
   </div>
 
   <div *ngFor="let e of enemies">
@@ -15,7 +15,11 @@
 </div>
 
 <div id="controls">
-  <button *ngFor="let b of buttons; let i = index" (click)="buttonClick(i)">
+  <button
+    *ngFor="let b of buttons; let i = index"
+    (click)="buttonClick(i)"
+    class="btn btn-outline-primary"
+  >
     Fire
   </button>
 </div>

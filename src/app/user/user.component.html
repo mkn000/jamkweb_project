@@ -1,0 +1,22 @@
+<div id="container">
+  <h2>Logged in as: {{ user }}</h2>
+  <button (click)="logOut()" class="btn btn-secondary">Log out</button>
+
+  <button
+    class="btn btn-primary"
+    type="button"
+    data-toggle="collapse"
+    data-target="#collapseExample"
+    aria-expanded="false"
+    aria-controls="collapseExample"
+  >
+    User deletion
+  </button>
+  <div class="collapse" id="collapseExample">
+    <div class="card card-body">
+      Deleting user also erases possible placements in leaderboard. Press
+      continue to delete user.
+      <button (click)="deleteUser()" class="btn btn-danger">Continue</button>
+    </div>
+  </div>
+</div>

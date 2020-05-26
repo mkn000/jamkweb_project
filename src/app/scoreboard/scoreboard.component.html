@@ -5,6 +5,14 @@
     <span class="score">{{ L.score }}</span>
   </div>
 
-  <h2>Personal best</h2>
-  <div id="pb">{{ scores.score }}</div>
+  <div *ngIf="loggedin; else notlogged">
+    <h2>Personal best:</h2>
+    <p>{{ pb }}</p>
+  </div>
+  <ng-template #notlogged>
+    <div>
+      <a routerLink="/login">Login</a> to keep track of your score and
+      participate in leaderboard
+    </div>
+  </ng-template>
 </div>

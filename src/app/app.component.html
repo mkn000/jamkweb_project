@@ -1,20 +1,31 @@
-<nav class="navbar navbar-expand-sm bg-light">
+<nav class="navbar navbar-expand-md navbar-light bg-light">
+  <a class="navbar-brand" routerLink="/">Game</a>
+
+  <button
+    class="navbar-toggler"
+    type="button"
+    data-toggle="collapse"
+    data-target="#collapsibleNavbar"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
   <!-- Links -->
-  <ul class="navbar-nav">
-    <li class="nav-item">
-      <a class="nav-link" href="#">Link 1</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#">Link 2</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#">Link 3</a>
-    </li>
-  </ul>
+  <div class="collapse navbar-collapse" id="collapsibleNavbar">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item" id="infonav">
+        <a class="nav-link" routerLink="/info">Info</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/scores">Scoreboard</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/user">User settings</a>
+      </li>
+    </ul>
+  </div>
 </nav>
 
 <div id="maincontainer">
-  <app-board></app-board>
-  <app-scoreboard></app-scoreboard>
+  <app-info></app-info>
+  <router-outlet></router-outlet>
 </div>
-<router-outlet></router-outlet>

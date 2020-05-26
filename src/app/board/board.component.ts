@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import {Enemy, Missile} from '../entities';
 import {Subscription, interval, Subject} from 'rxjs';
 import {ScoreService} from '../score.service';
@@ -9,30 +9,54 @@ import {rngInRange, distance} from '../morefunctions';
   templateUrl: './board.component.html',
   styleUrls: ['./board.component.css']
 })
-export class BoardComponent implements OnInit {
+export class BoardComponent implements OnInit, OnDestroy {
   BOARDHEIGHT: number = 750;
   gameStatus: boolean;
   buttons = new Array(7);
   enemies: Enemy[];
   missiles: Missile[];
   gameLoop: Subscription;
+  scoreCheck: Subscription;
   prevSpawnTime: number;
   prevShotTime: number;
   prevCannon: number;
   score: number;
   terminator = new Subject();
   wall;
+  ranOnce: boolean;
 
   constructor(public scores: ScoreService) {}
 
   ngOnInit(): void {
+    this.ranOnce = false;
     this.prevSpawnTime = Date.now();
     this.prevShotTime = Date.now();
     this.gameStatus = false;
     this.wall = {hp: 4};
   }
 
+  ngOnDestroy(): void {
+    if (this.ranOnce) {
+      this.gameLoop.unsubscribe();
+      this.scoreCheck.unsubscribe();
+      //delete references to enemies
+      for (let i = 0, L = this.enemies.length; i < L; i++) {
+        if (this.enemies[i]) {
+          this.enemies[i].terminate();
+          //this.enemies[i].status.unsubscribe();
+          delete this.enemies[i];
+        }
+      }
+      //delete references to missiles
+      for (let i = 0, L = this.missiles.length; i < L; i++) {
+        this.missiles[i].terminate();
+        delete this.missiles[i];
+      }
+    }
+  }
+
   newGame() {
+    this.ranOnce = true;
     this.gameStatus = true;
     this.score = 0;
     //this.buttons = new Array(7);
@@ -56,33 +80,18 @@ export class BoardComponent implements OnInit {
       }
 
       if (this.wall.hp < 0) {
-        this.gameOver();
+        this.scoreCheck = this.scores.checkScore(this.score).subscribe(res => {
+          console.log(res);
+          this.gameOver();
+        });
       }
     });
   }
 
   gameOver() {
     this.gameStatus = false;
-    this.gameLoop.unsubscribe();
-    //delete references to enemies
-    for (let i = 0, L = this.enemies.length; i < L; i++) {
-      if (this.enemies[i]) {
-        this.enemies[i].terminate();
-        //this.enemies[i].status.unsubscribe();
-        delete this.enemies[i];
-      }
-    }
-    //delete references to missiles
-    for (let i = 0, L = this.missiles.length; i < L; i++) {
-      this.missiles[i].terminate();
-      delete this.missiles[i];
-    }
-    setTimeout(_ => {
-      this.missiles = null;
-      this.enemies = null;
-    }, 33);
-    //check if new highscore
-    this.scores.checkScore(this.score);
+    //unsubscribe observables
+    this.ngOnDestroy();
   }
 
   spawnEnemy(): void {

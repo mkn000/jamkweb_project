@@ -1,12 +1,12 @@
 #leaderboard {
   display: flex;
   flex-direction: column;
-  align-content: space-between;
-  width: 100%;
+  justify-content: center;
+  width: 600px;
 }
 
-#leaderboard h2 {
-  margin: 50px auto;
+h2 {
+  margin-top: 50px;
 }
 
 #pb {
