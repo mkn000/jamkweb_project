@@ -1,18 +1,23 @@
-<div id="leaderboard">
-  <h2>Leaderboard</h2>
-  <div class="entry" *ngFor="let L of leaders">
-    <span class="name">{{ L.name }}</span>
-    <span class="score">{{ L.score }}</span>
-  </div>
-
-  <div *ngIf="loggedin; else notlogged">
-    <h2>Personal best:</h2>
-    <p>{{ pb }}</p>
-  </div>
-  <ng-template #notlogged>
-    <div>
-      <a routerLink="/login">Login</a> to keep track of your score and
-      participate in leaderboard
+<div id="container">
+  <div id="leaderboard">
+    <h2>Leaderboard</h2>
+    <div *ngIf="connError" class="alert alert-danger">
+      {{ connError }}
     </div>
-  </ng-template>
+    <div class="entry" *ngFor="let L of leaders">
+      <span class="name">{{ L.name }}</span>
+      <span class="score">{{ L.score }}</span>
+    </div>
+
+    <div *ngIf="loggedin; else notlogged">
+      <h2>Personal best:</h2>
+      <p>{{ pb }}</p>
+    </div>
+    <ng-template #notlogged>
+      <div>
+        <a routerLink="/login">Login</a> to keep track of your score and
+        participate in leaderboard
+      </div>
+    </ng-template>
+  </div>
 </div>

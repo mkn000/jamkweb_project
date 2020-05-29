@@ -9,10 +9,12 @@ import {AuthService} from '../auth.service';
 })
 export class LoginComponent implements OnInit {
   errorMsg: string;
+  successMsg: string;
   constructor(private auth: AuthService, private router: Router) {}
 
   ngOnInit(): void {
     this.errorMsg = '';
+    this.successMsg = '';
   }
 
   signUp(value, valid) {
@@ -20,25 +22,31 @@ export class LoginComponent implements OnInit {
       //this.authService.SignUp(value.tunnus, value.salasana);
       this.auth
         .register(value.tunnus, value.salasana)
-        .subscribe((result: {success: boolean; message: string}) => {
-          if (result.success) {
-            setTimeout(_ => this.signIn(value.tunnus, value.salasana), 200);
-          } else {
-            this.errorMsg = result.message;
+        .subscribe(
+          (result: {success: boolean; message: string; token?: string}) => {
+            if (result.success) {
+              this.successMsg = 'Registration successful. Logging in...';
+              setTimeout(_ => this.router.navigate(['/user']), 1000);
+            } else {
+              this.errorMsg = result.message;
+            }
           }
-        });
+        );
     }
   }
 
   signIn(value, valid) {
     if (valid) {
-      this.auth.login(value.tunnus, value.salasana).subscribe(result => {
-        if (result) {
-          setTimeout(_ => this.router.navigate(['/user']), 200);
-        } else {
-          this.errorMsg = 'Incorrect username or password';
-        }
-      });
+      this.auth.login(value.tunnus, value.salasana).subscribe(
+        result => {
+          if (result) {
+            setTimeout(_ => this.router.navigate(['/user']), 100);
+          } else {
+            this.errorMsg = 'Incorrect username or password';
+          }
+        },
+        err => (this.errorMsg = 'Connection error.')
+      );
     }
   }
 }

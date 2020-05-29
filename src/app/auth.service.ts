@@ -10,7 +10,8 @@ import {map} from 'rxjs/operators';
 })
 @Injectable()
 export class AuthService {
-  private apiUrl = 'http://localhost:3000/users'; // autentikaatiopalvelun osoite
+  private apiUrl = 'http://localhost:5000/users'; // autentikaatiopalvelun osoite
+  //private apiUrl = 'https://floating-garden-22904.herokuapp.com/users';
   public token: string;
   private jwtHelp = new JwtHelperService(); // helpperipalvelu jolla dekoodataan token
   private subject = new Subject<any>(); // subjectilla viesti navbariin että token on tullut
@@ -29,7 +30,23 @@ export class AuthService {
         password: password
       })
       .pipe(
-        map(res => {
+        map((res: {success: boolean; message: string; token?: string}) => {
+          if (res.success) {
+            //check token just in case
+            const payload = this.jwtHelp.decodeToken(res.token);
+            if (payload.username === username) {
+              // token sessionStorageen
+              sessionStorage.setItem(
+                'accesstoken',
+                JSON.stringify({
+                  username: username,
+                  token: res.token,
+                  dbid: payload.dbid
+                })
+              );
+              this.token = res.token;
+            }
+          }
           return res;
         })
       );
@@ -41,7 +58,7 @@ export class AuthService {
       .post(`${this.apiUrl}/login`, {username: username, password: password})
       .pipe(
         map(res => {
-          console.log(res); // loggaa alla olevan tyylisen vastauksen
+          //console.log(res); // loggaa alla olevan tyylisen vastauksen
           /*
         {success: true, message:
           "Tässä on valmis Token!",
@@ -57,7 +74,6 @@ export class AuthService {
             try {
               // dekoodataan token
               const payload = this.jwtHelp.decodeToken(token);
-              console.log(payload);
               // Tässä voidaan tarkistaa tokenin oikeellisuus
               if (payload.username === username) {
                 // token sessionStorageen
@@ -69,7 +85,7 @@ export class AuthService {
                     dbid: payload.dbid
                   })
                 );
-                this.loginTrue(); // lähetetään viesti navbariin että vaihdetaan login:true -tilaan
+                //this.loginTrue(); // lähetetään viesti navbariin että vaihdetaan login:true -tilaan
                 console.log('login onnistui');
                 return true; // saatiin token
               } else {

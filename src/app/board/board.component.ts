@@ -1,15 +1,17 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
+import {BreakpointObserver, BreakpointState} from '@angular/cdk/layout';
 import {Enemy, Missile} from '../entities';
 import {Subscription, interval, Subject} from 'rxjs';
-import {ScoreService} from '../score.service';
+import {UserService} from '../user.service';
 import {rngInRange, distance} from '../morefunctions';
 
 @Component({
   selector: 'app-board',
   templateUrl: './board.component.html',
-  styleUrls: ['./board.component.css']
+  styleUrls: ['./board.component.css', '../app.component.css']
 })
 export class BoardComponent implements OnInit, OnDestroy {
+  BUTTONWIDTH: number;
   BOARDHEIGHT: number = 750;
   gameStatus: boolean;
   buttons = new Array(7);
@@ -23,12 +25,40 @@ export class BoardComponent implements OnInit, OnDestroy {
   score: number;
   terminator = new Subject();
   wall;
-  ranOnce: boolean;
 
-  constructor(public scores: ScoreService) {}
+  constructor(
+    public scores: UserService,
+    public bpObserver: BreakpointObserver
+  ) {
+    //observe media query breakpoints to keep game board logic in check
+    this.bpObserver
+      .observe([
+        '(max-width:420px)',
+        '(max-width:490px)',
+        '(max-width:700px)',
+        '(min-width:700px)'
+      ])
+      .subscribe((result: BreakpointState) => {
+        if (
+          result.breakpoints['(max-width:700px)'] ||
+          result.breakpoints['(min-width:700px)']
+        ) {
+          this.BUTTONWIDTH = 70;
+          this.BOARDHEIGHT = 700;
+        }
+        if (result.breakpoints['(max-width:490px)']) {
+          this.BUTTONWIDTH = 60;
+          this.BOARDHEIGHT = 600;
+        }
+        if (result.breakpoints['(max-width:420px)']) {
+          console.log('pieni');
+          this.BUTTONWIDTH = 50;
+          this.BOARDHEIGHT = 500;
+        }
+      });
+  }
 
   ngOnInit(): void {
-    this.ranOnce = false;
     this.prevSpawnTime = Date.now();
     this.prevShotTime = Date.now();
     this.gameStatus = false;
@@ -36,9 +66,10 @@ export class BoardComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.ranOnce) {
+    this.bpObserver.ngOnDestroy();
+    //score over 0 means the game has progressed atleast one loop
+    if (this.score > 0) {
       this.gameLoop.unsubscribe();
-      this.scoreCheck.unsubscribe();
       //delete references to enemies
       for (let i = 0, L = this.enemies.length; i < L; i++) {
         if (this.enemies[i]) {
@@ -49,14 +80,15 @@ export class BoardComponent implements OnInit, OnDestroy {
       }
       //delete references to missiles
       for (let i = 0, L = this.missiles.length; i < L; i++) {
-        this.missiles[i].terminate();
-        delete this.missiles[i];
+        if (this.missiles[i]) {
+          this.missiles[i].terminate();
+          delete this.missiles[i];
+        }
       }
     }
   }
 
   newGame() {
-    this.ranOnce = true;
     this.gameStatus = true;
     this.score = 0;
     //this.buttons = new Array(7);
@@ -74,15 +106,16 @@ export class BoardComponent implements OnInit, OnDestroy {
       this.missiles = this.missiles.filter(_ => {
         return true;
       });
-      //spawn enemies every 2 seconds
-      if (Math.abs(this.prevSpawnTime - now) > 2000) {
+      //spawn enemies every 1.5 seconds
+      if (Math.abs(this.prevSpawnTime - now) > 1500) {
         this.spawnEnemy();
       }
 
       if (this.wall.hp < 0) {
+        this.gameOver();
+        //personal best score and leaderboard admittance are on backend
         this.scoreCheck = this.scores.checkScore(this.score).subscribe(res => {
           console.log(res);
-          this.gameOver();
         });
       }
     });
@@ -97,11 +130,11 @@ export class BoardComponent implements OnInit, OnDestroy {
   spawnEnemy(): void {
     this.prevSpawnTime = Date.now();
     const rng = rngInRange(0, 6);
-    let e = new Enemy(rng * 70 + 35, 0);
+    let e = new Enemy(this.BUTTONWIDTH);
     let s = e.status.subscribe((e: Enemy) => {
       if (
         e.curPos.y > this.BOARDHEIGHT ||
-        e.curPos.y > this.BOARDHEIGHT - this.wall.hp * 10
+        e.curPos.y > this.BOARDHEIGHT - this.wall.hp * 12
       ) {
         this.wall.hp -= 1;
         e.terminate();
@@ -120,13 +153,13 @@ export class BoardComponent implements OnInit, OnDestroy {
     ) {
       this.prevCannon = i;
       this.prevShotTime = Date.now();
-      let m = new Missile(i * 70 + 35, this.BOARDHEIGHT);
+      let m = new Missile(this.BUTTONWIDTH * (i + 0.5), this.BOARDHEIGHT);
       let s = m.status.subscribe((m: Missile) => {
         //destroy on hit
         for (let i = 0, L = this.enemies.length; i < L; i++) {
           if (
             this.enemies[i] &&
-            distance(m.curPos, this.enemies[i].curPos) < 40
+            distance(m.curPos, this.enemies[i].curPos) < 25
           ) {
             //destroy on impact
             this.enemies[i].terminate();

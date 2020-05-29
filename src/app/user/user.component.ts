@@ -1,5 +1,6 @@
 import {Component, OnDestroy} from '@angular/core';
 import {AuthService} from '../auth.service';
+import {UserService} from '../user.service';
 import {Router} from '@angular/router';
 import {Subscription} from 'rxjs';
 
@@ -9,22 +10,26 @@ import {Subscription} from 'rxjs';
   styleUrls: ['./user.component.css']
 })
 export class UserComponent implements OnDestroy {
-  login: boolean;
   sub: Subscription;
   user: string;
+  gamesp: number;
+  pb: number;
 
-  constructor(private router: Router, private auth: AuthService) {
-    this.sub = this.auth.loginTrue().subscribe(message => {
-      this.login = message;
-    });
-
+  constructor(
+    private router: Router,
+    private auth: AuthService,
+    private userS: UserService
+  ) {
     const atoken = JSON.parse(sessionStorage.getItem('accesstoken'));
     if (atoken) {
-      this.login = true;
       this.user = atoken.username;
-    } else {
-      this.login = false;
     }
+    this.sub = this.userS
+      .fetchUser()
+      .subscribe((data: {name: string; score: number; gamesplayed: number}) => {
+        this.pb = data.score;
+        this.gamesp = data.gamesplayed;
+      });
   }
 
   logOut() {
@@ -33,8 +38,11 @@ export class UserComponent implements OnDestroy {
   }
 
   deleteUser() {
-    this.auth.delete().subscribe(msg => console.log(msg));
-    this.router.navigateByUrl('/login');
+    this.auth.delete().subscribe((msg: {success: boolean; message: string}) => {
+      if (msg.success) {
+        this.logOut();
+      }
+    });
   }
 
   ngOnDestroy() {

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Observable} from 'rxjs';
-import {catchError} from 'rxjs/operators';
+import {Observable, of} from 'rxjs';
+import {catchError, map} from 'rxjs/operators';
 
 const headers = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -10,28 +10,38 @@ const headers = {
 @Injectable({
   providedIn: 'root'
 })
-export class ScoreService {
-  private apiUrl = 'http://localhost:3000/';
+export class UserService {
+  private apiUrl = 'http://localhost:5000/';
+  //private apiUrl = 'https://floating-garden-22904.herokuapp.com/';
 
-  score: number = 0;
+  pb: number = 0;
   leaders;
   constructor(public http: HttpClient) {}
 
-  fetchLeaders() {
+  fetchLeaders(): Observable<any> {
     return this.http.get(this.apiUrl + 'leaderboard');
+    //.pipe(catchError(this.handleError));
   }
 
-  fetchScore() {
+  fetchUser(): Observable<Object> {
     const acctoken = JSON.parse(sessionStorage['accesstoken']);
     const headers = {
       headers: new HttpHeaders({'x-access-token': acctoken.token})
     };
-    return this.http.get(this.apiUrl + `users/score`, headers);
+    return this.http.get(this.apiUrl + `users/me`, headers).pipe(
+      map((res: {score: number}) => {
+        this.pb = res.score;
+        return res;
+      })
+    );
   }
 
+  /**send score to backend to see if its personal best or good enough to enter
+   * the leaderboard
+   */
+
   checkScore(newScore: number) {
-    if (newScore > this.score) {
-      this.score = newScore;
+    try {
       const acctoken = JSON.parse(sessionStorage['accesstoken']);
       return this.http
         .put(
@@ -42,11 +52,13 @@ export class ScoreService {
           headers
         )
         .pipe(catchError(this.handleError));
+    } catch {
+      return of({message: 'Not logged in'});
     }
   }
 
   private handleError(err: any): Observable<any> {
     console.error(err);
-    return err || err.message;
+    return of(err || err.message);
   }
 }

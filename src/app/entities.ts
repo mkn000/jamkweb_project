@@ -6,11 +6,7 @@ class Chara {
   hp: number;
   pos: {x: number; y: number};
 
-  constructor(x, y) {
-    this.pos = {x, y};
-  }
-
-  takeDamage(dmg: number) {}
+  constructor() {}
 
   get curPos(): {x: number; y: number} {
     return {x: this.pos.x, y: this.pos.y};
@@ -34,22 +30,28 @@ export class Enemy extends Chara {
     }
   };
 
-  constructor(x, y) {
-    super(x, y);
+  constructor(private B: number) {
+    super();
+    //spawnpoint is directly on top of one the buttons
+    const posrng = rngInRange(0, 6);
+    const _x = B * (posrng + 0.5);
+    this.pos = {x: _x, y: 0};
     this.subs = [];
-    this.xOffset = x;
-    const rng = rngInRange(0, 1);
+    this.xOffset = _x;
+    const moverng = rngInRange(0, 1);
     let A;
-    switch (rng) {
+    switch (moverng) {
       case 0:
+        //move speed
         A = Math.random() < 0.7 ? 1 : 2;
         this.Move = this.moveset.linear;
         break;
       case 1:
         //additional check, sine can't be spawned too close to borders
-        if (x > 35 && x < 455) {
-          const Amax = Math.min(Math.abs(0 - x), Math.abs(490 - x));
-          A = rngInRange(35, Amax);
+        if (_x > B / 2 && _x < 6.5 * B) {
+          //sine amplitude
+          const Amax = Math.min(_x, Math.abs(6 * B - _x));
+          A = rngInRange(B / 2, Amax);
           this.Move = this.moveset.sine;
           break;
         }
@@ -72,43 +74,14 @@ export class Enemy extends Chara {
   }
 }
 
-export class Player extends Chara {
-  userActions: number;
-  coolDown: boolean;
-  giveColDmg = 2;
-
-  constructor(pos) {
-    super(5, 'P');
-    this.coolDown = false;
-    this.pos = pos;
-    this.userActions = 3;
-  }
-
-  action() {
-    this.userActions -= 1;
-    if (this.userActions === 0) {
-      console.log('Cooldown start!');
-      this.coolDown = true;
-      setTimeout(_ => {
-        console.log('Cooldown end!');
-        this.userActions = 3;
-        this.coolDown = false;
-      }, 2500);
-    }
-  }
-
-  takeDamage(dmg: number) {
-    this.hp -= dmg;
-  }
-}
-
 export class Missile extends Chara {
   subs: Array<Subscription>;
   status = new Subject(); //send hp to logic
   updatePos: Subscription;
 
-  constructor(x, y) {
-    super(x, y);
+  constructor(private _x: number, _y: number) {
+    super();
+    this.pos = {x: _x, y: _y};
     this.subs = [];
     this.subs[0] = interval(17).subscribe(_ => {
       this.Move();
@@ -125,9 +98,4 @@ export class Missile extends Chara {
       s.unsubscribe();
     });
   }
-}
-
-export class Wall {
-  hp: number = 4;
-  constructor() {}
 }

@@ -1,25 +1,27 @@
-<div id="board">
-  <div id="splash" *ngIf="!gameStatus">
-    <div *ngIf="score > 0" id="score">Your score: {{ score }}</div>
-    <button (click)="newGame()" class="btn btn-primary">New Game</button>
-  </div>
+<div id="container">
+  <div id="board">
+    <div id="splash" *ngIf="!gameStatus">
+      <div *ngIf="score > 0" id="score">Your score: {{ score }}</div>
+      <button (click)="newGame()" class="btn btn-primary">New Game</button>
+    </div>
 
-  <div *ngFor="let e of enemies">
-    <div *ngIf="e" [ngStyle]="entityStyle(e)">e</div>
-  </div>
-  <div *ngFor="let m of missiles">
-    <div *ngIf="m" [ngStyle]="entityStyle(m)">m</div>
-  </div>
+    <div *ngFor="let e of enemies">
+      <div *ngIf="e" [ngStyle]="entityStyle(e)">e</div>
+    </div>
+    <div *ngFor="let m of missiles">
+      <div *ngIf="m" [ngStyle]="entityStyle(m)">m</div>
+    </div>
 
-  <div id="wall" [ngStyle]="wallStyle()"></div>
-</div>
-
-<div id="controls">
-  <button
-    *ngFor="let b of buttons; let i = index"
-    (click)="buttonClick(i)"
-    class="btn btn-outline-primary"
-  >
-    Fire
-  </button>
+    <div id="wall" [ngStyle]="wallStyle()"></div>
+  </div>
+  <div id="controls" [ngStyle]="{'height': BUTTONWIDTH + 'px'}">
+    <button
+      *ngFor="let b of buttons; let i = index"
+      (click)="buttonClick(i)"
+      [ngStyle]="{'width': BUTTONWIDTH + 'px'}"
+      class="btn btn-outline-primary"
+    >
+      Fire
+    </button>
+  </div>
 </div>

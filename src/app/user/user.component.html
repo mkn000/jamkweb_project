@@ -1,9 +1,14 @@
 <div id="container">
   <h2>Logged in as: {{ user }}</h2>
+  <p>
+    Personal best score: {{ pb }}<br />
+    Games played: {{ gamesp }}
+  </p>
+
   <button (click)="logOut()" class="btn btn-secondary">Log out</button>
 
   <button
-    class="btn btn-primary"
+    class="btn btn-danger"
     type="button"
     data-toggle="collapse"
     data-target="#collapseExample"

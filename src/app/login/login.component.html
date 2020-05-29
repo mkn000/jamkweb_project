@@ -49,12 +49,18 @@
         Password minimum length is 8 characters.
       </div>
     </div>
-    <button class="btn btn-primary" (click)="signIn(f.value, f.valid)">
-      Login
-    </button>
-    <button class="btn btn-secondary" (click)="signUp(f.value, f.valid)">
-      Register
-    </button>
+    <div id="buttons">
+      <button class="btn btn-primary" (click)="signIn(f.value, f.valid)">
+        Login
+      </button>
+      <button class="btn btn-secondary" (click)="signUp(f.value, f.valid)">
+        Register
+      </button>
+    </div>
   </form>
-  <div *ngIf="errorMsg" class="text-danger">{{ errorMsg }}</div>
+  <div *ngIf="errorMsg" class="alert alert-danger">{{ errorMsg }}</div>
+  <div *ngIf="successMsg" class="alert alert-success">
+    {{ successMsg }}
+    <div class="spinner-border"></div>
+  </div>
 </div>
