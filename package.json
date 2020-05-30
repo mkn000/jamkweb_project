@@ -8,10 +8,10 @@
   "scripts": {
     "ng": "ng",
     "start": "node server.js",
-    "build": "ng build",
+    "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
-    "postinstall": "ng build --output-path dist"
+    "postinstall": "ng build --prod"
   },
   "private": true,
   "dependencies": {
@@ -29,7 +29,6 @@
     "@angular/service-worker": "~9.0.2",
     "@auth0/angular-jwt": "^4.1.2",
     "typescript": "~3.7.5",
-    "angular-in-memory-web-api": "^0.11.0",
     "bootstrap": "^4.5.0",
     "jquery": "^3.5.1",
     "popper.js": "^1.16.1",
@@ -66,7 +65,6 @@
     "karma-jasmine-html-reporter": "^1.4.2",
     "protractor": "^7.0.0",
     "ts-node": "~8.3.0",
-    "tslint": "~5.18.0",
-    "typescript": "~3.7.5"
+    "tslint": "~5.18.0"
   }
 }

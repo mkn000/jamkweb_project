@@ -29,9 +29,8 @@ import {environment} from '../environments/environment';
     FormsModule,
     HttpClientModule,
     LayoutModule,
-    ServiceWorkerModule.register('ngsw-worker.js', {
-      enabled: environment.production,
-      registrationStrategy: 'registerImmediately'
+    ServiceWorkerModule.register('./ngsw-worker.js', {
+      enabled: environment.production
     })
   ],
   providers: [],

@@ -7,7 +7,6 @@ const angularBuild = path.resolve(__dirname, '../dist/loppurealtime');
  * not for the api we redirect to angular index-page. Doing this we can refresh
  * the browser page even when we are not in the root.
  */
-
 router.use(express.static(angularBuild));
 router.get('/*', function (req, res, next) {
   if (req.url.startsWith('/api')) {

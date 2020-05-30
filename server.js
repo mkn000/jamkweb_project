@@ -134,7 +134,7 @@ app.use(
   })
 );
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, '/dist/')));
+app.use(express.static(path.join(__dirname, './dist/loppurealtime')));
 
 app.use('/', index); // index-reitti
 app.use('/api/users', users); // users-reitti
