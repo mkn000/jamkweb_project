@@ -10,7 +10,7 @@ import {map} from 'rxjs/operators';
 })
 @Injectable()
 export class AuthService {
-  private apiUrl = 'http://localhost:5000/users'; // autentikaatiopalvelun osoite
+  private apiUrl = '/api/users'; // autentikaatiopalvelun osoite
   //private apiUrl = 'https://floating-garden-22904.herokuapp.com/users';
   public token: string;
   private jwtHelp = new JwtHelperService(); // helpperipalvelu jolla dekoodataan token

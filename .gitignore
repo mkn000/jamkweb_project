@@ -30,12 +30,14 @@ speed-measure-plugin*.json
 !.vscode/launch.json
 !.vscode/extensions.json
 .history/*
+*.editorconfig
 
 # misc
 /.sass-cache
 /connect.lock
 /coverage
 /libpeerconnection.log
+/e2e
 npm-debug.log
 yarn-error.log
 testem.log
@@ -44,3 +46,6 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+# env variables
+*.env

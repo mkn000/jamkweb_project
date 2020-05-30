@@ -1,7 +1,16 @@
 #container {
-  width: 600px;
+  display: flex;
+  width: 100%;
+  justify-content: flex-start;
+  flex-direction: column;
+}
+
+#buttons {
+  width: max-content;
+  display: flex;
+  justify-content: flex-start;
 }
 
 h2 {
-  margin: 50px auto;
+  margin: 50px 0;
 }

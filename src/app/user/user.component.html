@@ -5,18 +5,20 @@
     Games played: {{ gamesp }}
   </p>
 
-  <button (click)="logOut()" class="btn btn-secondary">Log out</button>
+  <div id="buttons">
+    <button (click)="logOut()" class="btn btn-secondary">Log out</button>
 
-  <button
-    class="btn btn-danger"
-    type="button"
-    data-toggle="collapse"
-    data-target="#collapseExample"
-    aria-expanded="false"
-    aria-controls="collapseExample"
-  >
-    User deletion
-  </button>
+    <button
+      class="btn btn-danger"
+      type="button"
+      data-toggle="collapse"
+      data-target="#collapseExample"
+      aria-expanded="false"
+      aria-controls="collapseExample"
+    >
+      User deletion
+    </button>
+  </div>
   <div class="collapse" id="collapseExample">
     <div class="card card-body">
       Deleting user also erases possible placements in leaderboard. Press

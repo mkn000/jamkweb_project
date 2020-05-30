@@ -11,7 +11,7 @@ const headers = {
   providedIn: 'root'
 })
 export class UserService {
-  private apiUrl = 'http://localhost:5000/';
+  private apiUrl = '/api/';
   //private apiUrl = 'https://floating-garden-22904.herokuapp.com/';
 
   pb: number = 0;
