@@ -7,7 +7,7 @@ puolustettava muuria ampumalla nämä. Pelissä saa kuluneen ajan perusteella pi
 
 ## Teknologia
 
-Angularilla toteutettu frontend. Useita eri komponentteja: itse peli, pistelistaus, kirjautuminen, infosivu ja käyttäjäsivu. Käyttäjäsivu on suojattu, sinne pyrkiessään kirjautumaton käyttäjä ohjataan automaattisesti kirjautumis/rekisteröitymissivulle. Sivun tyyleissä on käytetty hieman Bootstrappiä. Sivu on (jossain määrin) vaakasuunnassa responsiivinen, toteutettu flexboxilla. Sivun pitäisi siis toimia myös mobiilisti portrait-moodissa.
+Angularilla toteutettu frontend. Useita eri komponentteja: itse peli, pistelistaus, kirjautuminen, infosivu ja käyttäjäsivu. Käyttäjäsivu on suojattu, sinne pyrkiessään kirjautumaton käyttäjä ohjataan automaattisesti kirjautumis/rekisteröitymissivulle. Sivun tyyleissä on käytetty hieman Bootstrappiä. Sivu on (jossain määrin) vaakasuunnassa responsiivinen, toteutettu flexboxilla. Sivun pitäisi siis toimia myös mobiilisti portrait-moodissa. Sovellus on PWA-kelpoinen ja se voidaan asentaa puhelimen kotinäyttöön tai Chrome-selaimen kautta myös tietokoneen työpöydälle.
 
 Nodejs (express) backend. Vastaa tietojen hausta tietokannasta, mukaanlukien käyttäjien rekisteröiminen ja autentikointi. Autentikoinnissa käytetään JSON Web Tokenia.
 
