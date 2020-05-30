@@ -11,6 +11,8 @@ import {FormsModule} from '@angular/forms';
 import {InfoComponent} from './info/info.component';
 import {UserComponent} from './user/user.component';
 import {LoginComponent} from './login/login.component';
+import {ServiceWorkerModule} from '@angular/service-worker';
+import {environment} from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,11 @@ import {LoginComponent} from './login/login.component';
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    LayoutModule
+    LayoutModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+      registrationStrategy: 'registerImmediately'
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]
