@@ -12,7 +12,6 @@ const headers = {
 })
 export class UserService {
   private apiUrl = '/api/';
-  //private apiUrl = 'https://floating-garden-22904.herokuapp.com/';
 
   pb: number = 0;
   leaders;
