@@ -11,9 +11,9 @@ router.get('/', function(req, res, next) {
     res.send('respond with a resource');
 });
 */
-// rekisteröityminen eli luodaan uudelle käyttäjän tunnarit
+//registration
 router.post('/register', userCon.registerUser);
-// kirjautuminen eli autentikaatio tunnareilla
+//login
 router.post('/login', userCon.authenticateUser);
 //päivitä score
 router.put('/update/:upscore', authorize, userCon.updateUser);
