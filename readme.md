@@ -1,3 +1,11 @@
+This a repository for a final project for a web developer course which I participated in 2019-2020 at JAMK University of Applied Sciences, the Finnish section below is related to that and outlines the technologies and other aspects on how the web app was build. The same information is summarized here in English.
+
+The web app is a simple shooting game featuring score tracking and leaderboard. The frontend is made in Angular with Bootstrap styling. The app is horizontally responsive so it can be played on a smartphone in portrait mode. The app adheres to Google Lighthouse standards, making it PWA.
+
+The backend is made in nodeJS using express. The backend is responsibly for database interactions, like fetching scores and user registrations. User authentication is uses JSON web token. The database is mongoDB. The holds information on users (nickname, password, score, played games) and the overall leaderboard of top 5 scores.
+
+The repository uses example code from the web developer course which means it wasn't written by yours truly but rather the course staff. This code is only in `verifytoken.js` ja `createtoken.js` files at project root and in `auth.service.ts` in the src/app/ folder, the code can be identified by the surrounding comments, they are written in Finnish.
+
 # JAMK Web dev projekti
 
 ## Esittely
