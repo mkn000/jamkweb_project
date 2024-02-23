@@ -23,6 +23,7 @@ const mongoose = require('mongoose');
 const app = express();
 
 const port = normalizePort(process.env.PORT || '4000');
+const port = normalizePort(process.env.PORT || '5000');
 app.set('port', port);
 
 /**
