@@ -1,0 +1,40 @@
+[{
+  "_id": {
+    "$oid": "5ecec319cb9b68d0fce85f97"
+  },
+  "name": "hessu",
+  "score": 2960,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "5ecec2c4cb9b68d0fce85f95"
+  },
+  "name": "keijo",
+  "score": 1730,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "5ecfa7e297ab87b192e080d3"
+  },
+  "name": "herman",
+  "score": 2540,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "5ed247f94a51475a189873b3"
+  },
+  "name": "keijo",
+  "score": 2500,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "5ecfa759bd0d537cef075fa5"
+  },
+  "name": "keijo",
+  "score": 1760,
+  "__v": 0
+}]
