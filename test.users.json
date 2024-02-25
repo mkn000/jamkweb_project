@@ -1,0 +1,30 @@
+[{
+  "_id": {
+    "$oid": "613e640403c52900173e6b7b"
+  },
+  "score": 2540,
+  "gamesplayed": 1,
+  "username": "herman",
+  "password": "$2a$08$C2aYsDOdL8p9z5P8PejRyeN2YqmKE/.6VE9l7idycQDV.8KminRDe",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "5ecfb0e52302f8f3aebce699"
+  },
+  "score": 2960,
+  "gamesplayed": 1,
+  "username": "hessu",
+  "password": "$2a$08$CsiXiPD2mToQCi55S4lIkODM6RyQGHP2XB1vWt3OLp3BnREwNdVzq",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "5ecfa73bbd0d537cef075fa4"
+  },
+  "score": 2500,
+  "gamesplayed": 3,
+  "username": "keijo",
+  "password": "$2a$08$cZ0s2rHFi1lmtGILerl0j.Uc4fViqBME8yXyQ6xr/uncmuM226bAO",
+  "__v": 0
+}]
