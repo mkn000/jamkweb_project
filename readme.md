@@ -1,3 +1,5 @@
+Deployed here: [](https://jamkweb-project.onrender.com/scores)
+
 This a repository for a final project for a web developer course which I participated in 2019-2020 at JAMK University of Applied Sciences, the Finnish section below is related to that and outlines the technologies and other aspects on how the web app was build. The same information is summarized here in English.
 
 The web app is a simple shooting game featuring score tracking and leaderboard. The frontend is made in Angular with Bootstrap styling. The app is horizontally responsive so it can be played on a smartphone in portrait mode. The app adheres to Google Lighthouse standards, making it PWA.
