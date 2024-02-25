@@ -10,14 +10,17 @@ import {AuthService} from '../auth.service';
 export class LoginComponent implements OnInit {
   errorMsg: string;
   successMsg: string;
-  constructor(private auth: AuthService, private router: Router) {}
+  constructor(
+    private auth: AuthService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.errorMsg = '';
     this.successMsg = '';
   }
 
-  signUp(value, valid) {
+  signUp(value: {tunnus: string; salasana: string}, valid: boolean) {
     if (valid) {
       //this.authService.SignUp(value.tunnus, value.salasana);
       this.auth
@@ -35,7 +38,7 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  signIn(value, valid) {
+  signIn(value: {tunnus: string; salasana: string}, valid: boolean) {
     if (valid) {
       this.auth.login(value.tunnus, value.salasana).subscribe(
         result => {

@@ -17,7 +17,7 @@ const LeaderboardController = {
             .catch(err => console.error(err));
         } else if (user.score > sorted[4].score) {
           //replacing the lowest score, remember the order in db doesn't matter
-          Leaderboard.findByIdAndUpdate(sorted[4]._id, user, _ => {
+          Leaderboard.findByIdAndUpdate(sorted[4]._id, user).then(_ => {
             console.log('Leaderboard updated.');
           });
         }
@@ -38,7 +38,7 @@ const LeaderboardController = {
    * Leaderboard is then repopulated by finding topscores from remaining users
    */
   deleteByName(user) {
-    Leaderboard.deleteMany({name: user.name})
+    Leaderboard.deleteOne({name: user.name})
       .then(_ => {
         console.log('Records deleted');
         User.find()

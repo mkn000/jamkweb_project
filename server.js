@@ -24,7 +24,7 @@ const app = express();
 
 const port = normalizePort(process.env.PORT || '5000');
 app.set('port', port);
-
+app.set('view engine', 'ejs');
 /**
  * Create HTTP server.
  */
@@ -96,23 +96,15 @@ function onListening() {
   debug('Listening on ' + bind);
 }
 
-mongoose.connect(
-  process.env.DB_CONN,
-  {
-    useCreateIndex: true,
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false
-  },
-  err => {
-    if (err) {
-      console.log('Yhteys ei toimi. Virhe: ' + err);
-    } else {
-      console.log('Yhteys kantaan toimii.');
-    }
+const mongoConnection = async () => {
+  try {
+    mongoose.connect(process.env.DB_CONN);
+    console.log('Yhteys kantaan toimii.');
+  } catch (err) {
+    console.log('Yhteys ei toimi. Virhe: ' + err);
   }
-);
-
+};
+mongoConnection();
 // view engine setup
 
 /*
@@ -144,7 +136,6 @@ app.use('/api/leaderboard', leaderboard); //leaderboard
 app.use(function (req, res, next) {
   const err = new Error('Not Found');
   err.status = 404;
-  next(err);
 });
 
 // error handler
@@ -155,7 +146,7 @@ app.use(function (err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.send(err);
 });
 
 module.exports = app;
