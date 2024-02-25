@@ -1,4 +1,4 @@
-Deployed here: [](https://jamkweb-project.onrender.com/scores)
+Deployed here: [https://jamkweb-project.onrender.com/](https://jamkweb-project.onrender.com/)
 
 This a repository for a final project for a web developer course which I participated in 2019-2020 at JAMK University of Applied Sciences, the Finnish section below is related to that and outlines the technologies and other aspects on how the web app was build. The same information is summarized here in English.
 
